@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shiftlanka_user/screens/auth/Loging_screen.dart';
+import 'package:shiftlanka_user/screens/auth/signup.dart';
 import 'package:shiftlanka_user/screens/home.dart';
-
 void main() {
   runApp(const ShiftLankaApp());
 }
@@ -17,7 +18,12 @@ class ShiftLankaApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
         fontFamily: 'Roboto',
       ),
-      home: const HomePage(),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignUpScreen(),
+        '/home': (context) => const ShiftLankaAppHome(),
+      },
     );
   }
 }
