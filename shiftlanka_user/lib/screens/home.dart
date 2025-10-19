@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class ShiftLankaAppHome extends StatelessWidget {
   const ShiftLankaAppHome({Key? key}) : super(key: key);
@@ -17,35 +18,109 @@ class ShiftLankaAppHome extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late PageController _pageController;
+  int _currentImageIndex = 0;
+  late Timer _timer;
+
+  // List of background images
+  final List<String> backgroundImages = [
+    'assets/background/home_bg1.png',
+    'assets/background/home_bg2.png',
+    'assets/background/home_bg3.png',
+    'assets/background/home_bg4.png',
+    'assets/background/home_bg5.png',
+    'assets/background/home_bg6.png',
+    'assets/background/home_bg7.png',
+    'assets/background/home_bg8.png',
+    'assets/background/home_bg9.png',
+    'assets/background/home_bg10.png',
+    'assets/background/home_bg11.png',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _startAutoSlide();
+  }
+
+  void _startAutoSlide() {
+    _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
+      if (_pageController.hasClients) {
+        _pageController.nextPage(
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(),
-                const SizedBox(height: 40),
-                _buildWelcomeSection(),
-                const SizedBox(height: 30),
-                _buildStatsGrid(),
-                const SizedBox(height: 40),
-                _buildServicesSection(),
-                const SizedBox(height: 30),
-                _buildNeedHelpSection(context),
-                const SizedBox(height: 30),
-                _buildFooter(),
-              ],
+    return Stack(
+      children: [
+        // Background carousel
+        PageView.builder(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _currentImageIndex = index % backgroundImages.length;
+            });
+          },
+          itemBuilder: (context, index) {
+            return Image.asset(
+              backgroundImages[index % backgroundImages.length],
+              fit: BoxFit.cover,
+            );
+          },
+        ),
+        // Dark overlay for better text visibility
+        Container(
+          color: Colors.black.withOpacity(0.4),
+        ),
+        // Main content
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildHeader(),
+                    const SizedBox(height: 40),
+                    _buildWelcomeSection(),
+                    const SizedBox(height: 30),
+                    _buildStatsGrid(),
+                    const SizedBox(height: 40),
+                    _buildServicesSection(),
+                    const SizedBox(height: 30),
+                    _buildNeedHelpSection(context),
+                    const SizedBox(height: 30),
+                    _buildFooter(),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -281,7 +356,7 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Plan atrip in Sri Lanka?',
+          'Plan a trip in Sri Lanka?',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
