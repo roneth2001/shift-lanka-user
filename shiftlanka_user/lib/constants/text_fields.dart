@@ -19,6 +19,7 @@ class CustomTextField extends StatefulWidget {
   final Function(String)? onChanged;
   final FocusNode? focusNode;
   final TextCapitalization textCapitalization;
+  final Color? textColor;
 
   const CustomTextField({
     Key? key,
@@ -37,6 +38,7 @@ class CustomTextField extends StatefulWidget {
     this.onChanged,
     this.focusNode,
     this.textCapitalization = TextCapitalization.none,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -59,7 +61,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       focusNode: widget.focusNode,
       textCapitalization: widget.textCapitalization,
       style: const TextStyle(
-        color: Colors.white,
+        color: Color.fromARGB(255, 0, 0, 0),
         fontSize: 16,
       ),
       validator: widget.validator,
@@ -68,11 +70,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         hintStyle: TextStyle(
-          color: Colors.white.withOpacity(0.7),
+          color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.7),
           fontSize: 16,
         ),
         filled: true,
-        fillColor: const Color(0xFF9575CD),
+        fillColor: const Color.fromARGB(186, 253, 253, 253),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -134,6 +136,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       ),
     );
   }
+  
 }
 
 // Validators for common use cases

@@ -33,7 +33,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-  Future<void> _handleSignUp() async {
+  Future<void> _handleSignUp(String route) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
@@ -48,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       // Add your sign up logic here
       // Navigate to home screen or login screen on success
-      Navigator.pushNamed(context, '/home');
+      Navigator.pushNamed(context, route);
     }
   }
 
@@ -214,7 +214,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       width: double.infinity,
       height: 56,
       child: ElevatedButton(
-        onPressed: _isLoading ? null : _handleSignUp,
+        onPressed: _isLoading ? null : () => _handleSignUp('/home'),
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFFF5722),
           foregroundColor: Colors.white,

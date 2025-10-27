@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:shiftlanka_user/screens/pages/route_search.dart';
+
 class ShiftLankaAppHome extends StatelessWidget {
   const ShiftLankaAppHome({Key? key}) : super(key: key);
 
@@ -249,6 +251,12 @@ class _HomePageState extends State<HomePage> {
                 'Route Search',
                 'Find the best routes',
                 Icons.search,
+                () {
+                  // Handle tap
+                  print('Route Search tapped');
+                  // Navigate or perform action
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const RouteSearchPage()));
+                },
               ),
             ),
             const SizedBox(width: 12),
@@ -257,6 +265,11 @@ class _HomePageState extends State<HomePage> {
                 'Live Tracking',
                 'Track buses in real time',
                 Icons.location_searching,
+                () {
+                  // Handle tap
+                  print('Live Tracking tapped');
+                  // Navigate or perform action
+                },
               ),
             ),
           ],
@@ -269,6 +282,11 @@ class _HomePageState extends State<HomePage> {
                 'Ticket Prices',
                 'Check fare info',
                 Icons.confirmation_number,
+                () {
+                  // Handle tap
+                  print('Ticket Prices tapped');
+                  // Navigate or perform action
+                },
               ),
             ),
             const SizedBox(width: 12),
@@ -277,6 +295,11 @@ class _HomePageState extends State<HomePage> {
                 'Bus Halts',
                 'View stop info',
                 Icons.bus_alert,
+                () {
+                  // Handle tap
+                  print('Bus Halts tapped');
+                  // Navigate or perform action
+                },
               ),
             ),
           ],
@@ -289,6 +312,11 @@ class _HomePageState extends State<HomePage> {
                 'Lost & Found',
                 'Report or search items',
                 Icons.inventory_2,
+                () {
+                  // Handle tap
+                  print('Lost & Found tapped');
+                  // Navigate or perform action
+                },
               ),
             ),
             const SizedBox(width: 12),
@@ -297,6 +325,11 @@ class _HomePageState extends State<HomePage> {
                 'Complaints',
                 'Submit feedback',
                 Icons.feedback,
+                () {
+                  // Handle tap
+                  print('Complaints tapped');
+                  // Navigate or perform action
+                },
               ),
             ),
           ],
@@ -305,48 +338,59 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildServiceCard(String title, String subtitle, IconData icon) {
-    return Container(
-      width: double.infinity,
-      height: 150,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.9),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.orange.shade400,
-              borderRadius: BorderRadius.circular(8),
+  Widget _buildServiceCard(String title, String subtitle, IconData icon, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: double.infinity,
+        height: 150,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
             ),
-            child: Icon(
-              icon,
-              color: Colors.white,
-              size: 20,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.orange.shade400,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(
+                icon,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black87,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: TextStyle(
-              color: Colors.grey.shade600,
-              fontSize: 12,
+            const SizedBox(height: 4),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: 12,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
