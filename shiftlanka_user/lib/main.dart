@@ -1,14 +1,19 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-
-// Your existing screens
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:shiftlanka_user/screens/auth/Loging_screen.dart';
 import 'package:shiftlanka_user/screens/auth/signup.dart';
 import 'package:shiftlanka_user/screens/home.dart';
 import 'package:shiftlanka_user/screens/loading/SplashScreen.dart';
 import 'package:shiftlanka_user/screens/pages/route_search.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ShiftLankaApp());
 }
 

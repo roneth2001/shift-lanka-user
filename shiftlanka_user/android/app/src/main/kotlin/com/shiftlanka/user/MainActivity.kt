@@ -1,4 +1,4 @@
-package com.example.shiftlanka_user
+package com.shiftlanka.user
 
 import io.flutter.embedding.android.FlutterActivity
 

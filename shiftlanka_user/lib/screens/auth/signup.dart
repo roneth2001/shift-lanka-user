@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shiftlanka_user/constants/text_fields.dart';
+import 'package:shiftlanka_user/services/FirebaseService.dart';
 // Import your colors and strings files
 // import 'colors.dart';
 // import 'strings.dart';
@@ -20,6 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _passwordController = TextEditingController();
   final _reEnterPasswordController = TextEditingController();
 
+  final FirebaseService _firebaseService = FirebaseService();
   bool _isLoading = false;
 
   @override
@@ -35,21 +37,100 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _handleSignUp(String route) async {
     if (_formKey.currentState!.validate()) {
+      // Check if passwords match
+      if (_passwordController.text != _reEnterPasswordController.text) {
+        _showErrorDialog('Passwords do not match');
+        return;
+      }
+
       setState(() {
         _isLoading = true;
       });
 
-      // Simulate API call
-      await Future.delayed(const Duration(seconds: 2));
+      try {
+        // Check if email already exists
+        bool emailExists = await _firebaseService.isEmailRegistered(_emailController.text.trim());
+        if (emailExists) {
+          _showErrorDialog('This email is already registered');
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
 
-      setState(() {
-        _isLoading = false;
-      });
+        // Check if phone number already exists
+        bool phoneExists = await _firebaseService.isPhoneNumberRegistered(_phoneController.text.trim());
+        if (phoneExists) {
+          _showErrorDialog('This phone number is already registered');
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
 
-      // Add your sign up logic here
-      // Navigate to home screen or login screen on success
-      Navigator.pushNamed(context, route);
+        // Sign up the passenger
+        String? uid = await _firebaseService.signUpPassenger(
+          fullName: _fullNameController.text.trim(),
+          email: _emailController.text.trim(),
+          phoneNumber: _phoneController.text.trim(),
+          address: _addressController.text.trim(),
+          password: _passwordController.text,
+        );
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        if (uid != null) {
+          // Show success message
+          _showSuccessDialog('Account created successfully!');
+          
+          // Navigate to home screen
+          await Future.delayed(const Duration(seconds: 1));
+          if (mounted) {
+            Navigator.pushReplacementNamed(context, route);
+          }
+        }
+      } catch (e) {
+        setState(() {
+          _isLoading = false;
+        });
+        _showErrorDialog(e.toString());
+      }
     }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSuccessDialog(String message) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Success'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -78,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(height: 20),
 
                     // Logo
-                    Image(image:  AssetImage('assets/logo.png'), height: 150),
+                    const Image(image: AssetImage('assets/logo.png'), height: 150),
 
                     // SignUp Text
                     const Text(
@@ -98,6 +179,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Full name is required';
+                        }
+                        if (value.length < 3) {
+                          return 'Full name must be at least 3 characters';
                         }
                         return null;
                       },
@@ -157,6 +241,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: _passwordController,
                       hintText: 'Password',
                       isPassword: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password is required';
+                        }
+                        if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 10),
 
@@ -165,6 +258,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: _reEnterPasswordController,
                       hintText: 'Re Enter Password',
                       isPassword: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please re-enter your password';
+                        }
+                        if (value != _passwordController.text) {
+                          return 'Passwords do not match';
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 20),
 
@@ -209,6 +311,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
+
   Widget _buildSignUpButton() {
     return SizedBox(
       width: double.infinity,
