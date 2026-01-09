@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "917818827494",
-    "project_id": "shiftlanka-5e08b",
-    "storage_bucket": "shiftlanka-5e08b.firebasestorage.app"
+    "project_number": "618880538435",
+    "project_id": "shiftlanka-dd973",
+    "storage_bucket": "shiftlanka-dd973.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:917818827494:android:71e4369f8fbf1093785127",
+        "mobilesdk_app_id": "1:618880538435:android:7af6936a044f60a09101f6",
         "android_client_info": {
           "package_name": "com.shiftlanka.user"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBUvLhrMJviwVhZG286en6X9pOweZwg12w"
+          "current_key": "AIzaSyANkr07p0MyzSgnWjaLJJUoOBQL2vJlaEM"
         }
       ],
       "services": {

@@ -17,29 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -53,10 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBUvLhrMJviwVhZG286en6X9pOweZwg12w',
-    appId: '1:917818827494:android:71e4369f8fbf1093785127',
-    messagingSenderId: '917818827494',
-    projectId: 'shiftlanka-5e08b',
-    storageBucket: 'shiftlanka-5e08b.firebasestorage.app',
+    apiKey: 'AIzaSyANkr07p0MyzSgnWjaLJJUoOBQL2vJlaEM',
+    appId: '1:618880538435:android:7af6936a044f60a09101f6',
+    messagingSenderId: '618880538435',
+    projectId: 'shiftlanka-dd973',
+    storageBucket: 'shiftlanka-dd973.firebasestorage.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyA7l23qb-bIveT1ZMttEYSUHtCn0H9qm4U',
+    appId: '1:618880538435:web:3373567f8415ea2c9101f6',
+    messagingSenderId: '618880538435',
+    projectId: 'shiftlanka-dd973',
+    authDomain: 'shiftlanka-dd973.firebaseapp.com',
+    storageBucket: 'shiftlanka-dd973.firebasestorage.app',
+    measurementId: 'G-WYP6N0BHZC',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCP-Gq_og-ilM95RnsrFybRG6my88MPFVs',
+    appId: '1:618880538435:ios:34b97636a0ef02c89101f6',
+    messagingSenderId: '618880538435',
+    projectId: 'shiftlanka-dd973',
+    storageBucket: 'shiftlanka-dd973.firebasestorage.app',
+    iosBundleId: 'com.example.shiftlankaUser',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCP-Gq_og-ilM95RnsrFybRG6my88MPFVs',
+    appId: '1:618880538435:ios:cfab453deec690249101f6',
+    messagingSenderId: '618880538435',
+    projectId: 'shiftlanka-dd973',
+    storageBucket: 'shiftlanka-dd973.firebasestorage.app',
+    iosBundleId: 'com.shiftlanka.user',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyA7l23qb-bIveT1ZMttEYSUHtCn0H9qm4U',
+    appId: '1:618880538435:web:b36c59bf18d5ca899101f6',
+    messagingSenderId: '618880538435',
+    projectId: 'shiftlanka-dd973',
+    authDomain: 'shiftlanka-dd973.firebaseapp.com',
+    storageBucket: 'shiftlanka-dd973.firebasestorage.app',
+    measurementId: 'G-7RM7DD7PEG',
+  );
+
 }

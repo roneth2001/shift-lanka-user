@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shiftlanka_user/screens/pages/profile_details.dart';
 import 'dart:async';
 
 import 'package:shiftlanka_user/screens/pages/route_search.dart';
@@ -152,16 +153,21 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.person,
-            color: Colors.white,
-            size: 24,
+       GestureDetector(
+          onTap: () {
+           Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountDetailsPage()));
+          },
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.person,
+              color: Colors.white,
+              size: 24,
+            ),
           ),
         ),
       ],
